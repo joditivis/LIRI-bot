@@ -51,11 +51,7 @@ function liriCommand(userInput, searchResult) {
             break;
 
         case "do-what-it-says":
-            doWhat(searchResult);
-
-        // if input is left blank, return this message to user
-        default:
-        console.log("Please enter one of the following commands: 'concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says' followed by what you would like to search for.")
+            doThis();
     }
 }
 // calling liriCommand function
@@ -63,22 +59,25 @@ liriCommand(userInput, searchResult);
 
 
 function spotifyThisSong() {
+    // if search result isn't found, display value for The Sign
     if (!searchResult) {
         searchResult = "The Sign by Ace of Base"
     };
 
+    // spotify search format
     spotify.search({ type: 'track', query: searchResult, limit: 1 }, function (error, data) {
         if (error) {
             return console.log('Error occurred: ' + error);
         }
 
+        // collecting data within array
         var spotifyArr = data.tracks.items;
 
         for (i = 0; i < spotifyArr.length; i++) {
-            console.log("-----------------------\n\nArtist: " + data.tracks.items[i].album.artists[0].name +
+            console.log("\n-----------------------\n\nArtist: " + data.tracks.items[i].album.artists[0].name +
                 "\nSong: " + data.tracks.items[i].name +
                 "\nAlbum: " + data.tracks.items[i].album.name +
-                "\nSpotify Link: " + data.tracks.items[i].external_urls.spotify + "\n\n-----------------------");
+                "\nSpotify Link: " + data.tracks.items[i].external_urls.spotify + "\n\n-----------------------\n");
         };
     });
 }
@@ -102,11 +101,9 @@ function movieThis() {
     if (!searchResult) {
         searchResult = "Mr Nobody";
     };
-
     // get OMDb API
     axios.get("http://www.omdbapi.com/?t=" + searchResult + "&y=&plot=short&apikey=trilogy").then(
         function (response) {
-            // console.log(response);
             console.log("-----------------------\n\nMovie Title: " + response.data.Title +
                 "\nRelease Year: " + response.data.Year +
                 "\nMovie Rated: " + response.data.Rated +
@@ -118,11 +115,20 @@ function movieThis() {
         })
 };
 
-function doWhat() {
+function doThis() {
+    // using readfile method to access random.txt file
     fs.readFile("random.txt", "utf8", function(error, data) {
         if (error) {
-            return console.log(error);
+            return console.log(error);           
         }
-    console.log("\n-----------------------\n\n" + data + "\n\n-----------------------\n");
-    })
+        // use .split to separate objects within our file 
+        var dataArr = data.split(",");
+
+        // taking objects from random.txt and passing as parameters 
+        userInput = dataArr[0];
+        searchResult = dataArr[1];
+
+        // calling main function for new parameters
+        liriCommand(userInput, searchResult);
+    });
 };
