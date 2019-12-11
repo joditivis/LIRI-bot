@@ -46,15 +46,15 @@ var searchResult = process.argv.slice(3).join(" ");
 
 function liriCommand(userInput, searchResult) {
     switch (userInput) {
-        case "concert-this":
-            bandsInTown();
-            break;
-
         case "spotify-this-song":
             spotifyThisSong();
             break;
 
-        case "movieThis":
+        case "concert-this":
+            concertThis();
+            break;
+
+        case "movie-this":
             movieThis();
             break;
 
@@ -66,10 +66,11 @@ function liriCommand(userInput, searchResult) {
             console.log("Please enter one of the following commands: 'concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says' followed by what you would like to search for.")
     }
 }
+// calling liriCommand function
 liriCommand(userInput, searchResult);
 
-function spotifyThisSong() {
 
+function spotifyThisSong() {
     if (!searchResult) {
         searchResult = "The Sign by Ace of Base"
     };
@@ -91,5 +92,39 @@ function spotifyThisSong() {
     });
 }
 
-// liriCommand();
+// function concertThis() {
+//     if (!searchResult) {
+//         console.log("Sorry, looks like they don't have any concerts coming up.");
+//     }
+
+//     axios.get("https://rest.bandsintown.com/artists/" + searchResult + "/events?app_id=codingbootcamp")
+//         .then(function (response) {
+
+//             console.log("------------------\n\nName of Venue: " + response.data[0].venue.name +
+//                 "\nVenue Location: " + response.data[0].venue.location +
+//                 "\nDate of Event: " + moment(response.data[0].datetime).format("MM/DD/YYYY, hh:00 A"));
+
+//         });
+//     }
+
+function movieThis() {
+    if (!searchResult) {
+        searchResult = "Mr Nobody";
+    };
+
+    // get OMDb API
+    axios.get("http://www.omdbapi.com/?t=" + searchResult + "&y=&plot=short&apikey=trilogy").then(
+        function(response) {
+            // console.log(response);
+            console.log("------------------\n\nMovie Title: " + response.data.Title +
+            "\nRelease Year: " + response.data.Year +
+            "\nMovie Rated: " + response.data.Rated +
+            "\nIMDb Rating: " + response.data.imdbRating +
+            "\nProduced in: " + response.data.Country +
+            "\nLanguage: " + response.data.Language + 
+            "\nPlot: " + response.data.Plot + 
+            "\nActors: " + response.data.Actors + "\n\n------------------")
+        })
+};
+
 
