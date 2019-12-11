@@ -80,22 +80,23 @@ function spotifyThisSong() {
                 "\nSpotify Link: " + data.tracks.items[i].external_urls.spotify + "\n\n-----------------------\n");
         };
     });
+};
+
+function concertThis() {
+    if (!searchResult) {
+        searchResult = "Taylor Swift";
+    }
+
+    axios.get("https://rest.bandsintown.com/artists/" + searchResult + "/events?app_id=codingbootcamp").then(
+        function (response) {
+            for (var i = 0; i < response.data.length; i++) {
+            console.log("------------------\n\nArtist: " + response.data[i].lineup +
+                "\nName of Venue: " + response.data[i].venue.name +
+                "\nVenue Location: " + response.data[i].venue.city + ", " + response.data[i].venue.country +
+                "\nDate of Event: " + moment(response.data[i].datetime).format("MM/DD/YYYY, hh:00 A") + "\n");
+        }
+    });
 }
-
-// function concertThis() {
-//     if (!searchResult) {
-//         searchResult = "Twenty One Pilots"
-//     };
-
-//     axios.get("https://rest.bandsintown.com/artists/" + searchResult + "/events?app_id=codingbootcamp").then(
-//         function (response) {
-//             // console.log(response);
-//             console.log("------------------\n\nName of Venue: " + response.data.venue.name +
-//                 "\nVenue Location: " + response.data.venue.address +
-//                 "\nDate of Event: " + moment(response.data.datetime).format("MM/DD/YYYY, hh:00 A"));
-
-//         });
-// }
 
 function movieThis() {
     if (!searchResult) {
@@ -108,18 +109,19 @@ function movieThis() {
                 "\nRelease Year: " + response.data.Year +
                 "\nMovie Rated: " + response.data.Rated +
                 "\nIMDb Rating: " + response.data.imdbRating +
+                "\nRotten Tomatoes Rating: " + response.data.Ratings[1].Value +
                 "\nProduced in: " + response.data.Country +
                 "\nLanguage: " + response.data.Language +
                 "\nPlot: " + response.data.Plot +
                 "\nActors: " + response.data.Actors + "\n\n-----------------------")
-        })
+    });
 };
 
 function doThis() {
     // using readfile method to access random.txt file
-    fs.readFile("random.txt", "utf8", function(error, data) {
+    fs.readFile("random.txt", "utf8", function (error, data) {
         if (error) {
-            return console.log(error);           
+            return console.log(error);
         }
         // use .split to separate objects within our file 
         var dataArr = data.split(",");
