@@ -48,7 +48,7 @@ liriCommand(userInput, searchResult);
 
 
 function spotifyThisSong() {
-    // if no search command is entered, print The Sign song details
+    // if no search command is entered, print the song Breezeblocks details
     if (!searchResult) {
         searchResult = "Breezeblocks"
         console.log("\nUh oh, your search field was blank. If you would like to search for a specific song, please insert it after 'spotify-this-song'.\nIn the meantime, here is a song I recommend:")
@@ -66,14 +66,14 @@ function spotifyThisSong() {
             "\nAlbum: " + data.tracks.items[0].album.name +
             "\nSpotify Link: " + data.tracks.items[0].external_urls.spotify + "\n\n-----------------------\n");
 
-        // appending information to log.txt file
+        // variables to pass through our logSpotify variable to then call on to append to log.txt
         var artist = data.tracks.items[0].artists[0].name;
         var song = data.tracks.items[0].name;
         var album = data.tracks.items[0].album.name;
         var songUrl = data.tracks.items[0].external_urls.spotify;
 
         var logSpotify = "\n\n-----Spotify Log-----" + "\nArtist: " + artist + "\nSong: " + song + "\nAlbum: " + album + "\nSpotify Link: " + songUrl + "\n";
-
+        // appending information to log.txt file
         fs.appendFile("log.txt", logSpotify, function (error) {
             if (error) throw error;
             console.log("Saved!");
@@ -87,7 +87,7 @@ function concertThis() {
         searchResult = "Taylor Swift"
         console.log("\nUh oh, your search field was blank. If you would like to search for a specific artist, please insert it after 'concert-this'.\nIn the meantime, here is the information for Taylor's upcoming event:")
     };
-
+    // get Bands in Town API
     axios.get("https://rest.bandsintown.com/artists/" + searchResult + "/events?app_id=codingbootcamp").then(
         function (response) {
 
@@ -100,14 +100,14 @@ function concertThis() {
                 "\nVenue Location: " + response.data[0].venue.city + ", " + response.data[0].venue.region + ", " + response.data[0].venue.country +
                 "\nDate of Event: " + moment(response.data[0].datetime).format("MM/DD/YYYY, hh:00 A") + "\n\n-----------------------\n");
 
-            // appending information to log.txt file
+            // variables to pass through our logConcert variable to then call on to append to log.txt
             var artist = response.data[0].artist.name;
             var venueName = response.data[0].venue.name;
             var location = response.data[0].venue.city + ", " + response.data[0].venue.region + ", " + response.data[0].venue.country;
             var date = moment(response.data[0].datetime).format("MM/DD/YYYY, hh:00 A");
 
             var logConcert = "\n\n-----Concert Log-----" + "\nArtist: " + artist + "\nName of Venue: " + venueName + "\nVenue Location: " + location + "\nDate of event: " + date + "\n";
-
+            // appending information to log.txt file
             fs.appendFile("log.txt", logConcert, function (error) {
                 if (error) throw error;
                 console.log("Saved!");
@@ -134,7 +134,7 @@ function movieThis() {
                 "\nPlot: " + response.data.Plot +
                 "\nCast: " + response.data.Actors + "\n\n-----------------------\n");
 
-            // appending information to log.txt file
+            // variables to pass through our logMovie variable to then call on to append to log.txt
             var title = response.data.Title;
             var year = response.data.Year;
             var rated = response.data.Rated;
@@ -145,9 +145,9 @@ function movieThis() {
             var plot = response.data.Plot;
             var cast = response.data.Actors;
 
-            var logSpotify = "\n\n-----Movie Log-----" + "\nMovie Title: " + title + "\nRelease Year: " + year + "\nMovie Rated: " + rated + "\nIMDb Rating: " + imdbRating + "\nRotten Tomatoes Rating: " + tomRating + "\nProduced in: " + produced + "\nLanguage: " + lang + "\nPlot: " + plot + "\nCast: " + cast + "\n\n";
-
-            fs.appendFile("log.txt", logSpotify, function (error) {
+            var logMovie = "\n\n-----Movie Log-----" + "\nMovie Title: " + title + "\nRelease Year: " + year + "\nMovie Rated: " + rated + "\nIMDb Rating: " + imdbRating + "\nRotten Tomatoes Rating: " + tomRating + "\nProduced in: " + produced + "\nLanguage: " + lang + "\nPlot: " + plot + "\nCast: " + cast + "\n\n";
+            // appending information to log.txt file
+            fs.appendFile("log.txt", logMovie, function (error) {
                 if (error) throw error;
                 console.log("Saved!");
             });
