@@ -1,0 +1,52 @@
+-----Spotify Log-----
+Artist: Bon Iver
+Song: Holocene
+Album: Bon Iver
+Apotify Link: https://open.spotify.com/track/4fbvXwMTXPWaFyaMWUm9CR
+
+
+-----Concert Log-----
+Artist: Céline Dion
+Name of Venue: TD Garden
+Venue Location: Boston, MA, United States
+Date of event: 12/13/2019, 07:00 PM
+
+
+-----Movie Log-----
+Movie Title: Ad Astra
+Release Year: 2019
+Movie Rated: PG-13
+IMDb Rating: 6.8
+Rotten Tomatoes Rating: 84%
+Produced in: USA, China
+Language: English, Japanese, Russian, Norwegian
+Plot: Astronaut Roy McBride undertakes a mission across an unforgiving solar system to uncover the truth about his missing father and his doomed expedition that now, 30 years later, threatens the universe.
+Cast: Brad Pitt, Tommy Lee Jones, Ruth Negga, Donald Sutherland
+
+
+
+-----Movie Log-----
+Movie Title: The Secret Life of Walter Mitty
+Release Year: 2013
+Movie Rated: PG
+IMDb Rating: 7.3
+Rotten Tomatoes Rating: 51%
+Produced in: USA, UK
+Language: English, Spanish, Icelandic
+Plot: When his job along with that of his co-worker are threatened, Walter takes action in the real world embarking on a global journey that turns into an adventure more extraordinary than anything he could have ever imagined.
+Cast: Ben Stiller, Kristen Wiig, Jon Daly, Kathryn Hahn
+
+
+
+-----Spotify Log-----
+Artist: Backstreet Boys
+Song: I Want It That Way
+Album: The Hits--Chapter One
+Spotify Link: https://open.spotify.com/track/6e40mgJiCid5HRAGrbpGA6
+
+
+-----Concert Log-----
+Artist: Taylor Swift
+Name of Venue: Z100's Jingle Ball Presented by Capital One
+Venue Location: New York, NY, United States
+Date of event: 12/13/2019, 07:00 PM
