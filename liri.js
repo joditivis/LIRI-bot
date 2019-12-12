@@ -1,39 +1,23 @@
 require("dotenv").config();
 
-// require inquirer
-const inquirer = require("inquirer");
-
 // require file systems
-const fs = require("fs");
+var fs = require("fs");
 
 // require axios
-const axios = require("axios");
+var axios = require("axios");
 
 // require moment
-const moment = require("moment");
+var moment = require("moment");
 
 // link keys.js file
-const keys = require("./keys.js");
+var keys = require("./keys.js");
 
 // initialize spotify
-const Spotify = require("node-spotify-api");
+var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
-
+console.log(process.argv)
 var userInput = process.argv[2];
 var searchResult = process.argv.slice(3).join(" ");
-
-
-// inquirer.prompt([
-//         {
-//             type: "input",
-//             name: "name",
-//             message: "Hi! What's your name?"
-//         },{
-//             type: "confirm",
-//             name: "ready",
-//             message: "Cool name! I'm LIRI bot. I can help you search for concert locations, songs, and your favorite movie's information. Ready?"
-//         }
-//     ]).then
 
 
 function liriCommand(userInput, searchResult) {
@@ -59,14 +43,15 @@ function liriCommand(userInput, searchResult) {
             console.log("Please enter one of the following commands: 'concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says' followed by what you would like to search for.")
     };
 }
-// calling liriCommand function
+// calling liriCommand function globally
 liriCommand(userInput, searchResult);
 
 
 function spotifyThisSong() {
     // if no search command is entered, print The Sign song details
     if (!searchResult) {
-        searchResult = "The Sign by Ace of Base"
+        searchResult = "Breezeblocks"
+        console.log("\nUh oh, your search field was blank. If you would like to search for a specific song, please insert it after 'spotify-this-song'.\nIn the meantime, here is a song I recommend:")
     };
 
     // spotify search format
@@ -74,45 +59,47 @@ function spotifyThisSong() {
         if (error) {
             return console.log('Error occurred: ' + error);
         }
+        // console.log(JSON.stringify(data, null, 2));
 
-        // collecting data within its array
-        var spotifyArr = data.tracks.items;
-
-        for (i = 0; i < spotifyArr.length; i++) {
-            console.log("\n-----------------------\n\nArtist: " + data.tracks.items[i].album.artists[0].name +
-                "\nSong: " + data.tracks.items[i].name +
-                "\nAlbum: " + data.tracks.items[i].album.name +
-                "\nSpotify Link: " + data.tracks.items[i].external_urls.spotify + "\n\n-----------------------\n");
-        };
+        console.log("\n-----------------------\n\nArtist: " + data.tracks.items[0].artists[0].name +
+            "\nSong: " + data.tracks.items[0].name +
+            "\nAlbum: " + data.tracks.items[0].album.name +
+            "\nSpotify Link: " + data.tracks.items[0].external_urls.spotify + "\n\n-----------------------\n");
     });
 };
 
 function concertThis() {
-    // if no search command is entered, print Taylor Swift concerts
+    // if no search command is entered, print Taylor Swift's concert info
     if (!searchResult) {
-        searchResult = "Taylor Swift";
-    }
+        searchResult = "Taylor Swift"
+        console.log("\nUh oh, your search field was blank. If you would like to search for a specific artist, please insert it after 'concert-this'.\nIn the meantime, here is the information for Taylor's upcoming event:")
+    };
 
     axios.get("https://rest.bandsintown.com/artists/" + searchResult + "/events?app_id=codingbootcamp").then(
         function (response) {
-            for (var i = 0; i < response.data.length; i++) {
-            console.log("------------------\n\nArtist: " + response.data[i].lineup +
-                "\nName of Venue: " + response.data[i].venue.name +
-                "\nVenue Location: " + response.data[i].venue.city + ", " + response.data[i].venue.country +
-                "\nDate of Event: " + moment(response.data[i].datetime).format("MM/DD/YYYY, hh:00 A") + "\n");
-        }
-    });
-}
+
+            if (!response.data[0]) {
+                console.log("\n-----------------------\n\nSorry, this artist doesn't have any upcoming concerts.\n\n-----------------------\n")
+                process.exit()
+            }
+            console.log("-----------------------\n\nArtist: " + response.data[0].artist.name +
+                "\nName of Venue: " + response.data[0].venue.name +
+                "\nVenue Location: " + response.data[0].venue.city + ", " + response.data[0].venue.region + ", " + response.data[0].venue.country +
+                "\nDate of Event: " + moment(response.data[0].datetime).format("MM/DD/YYYY, hh:00 A") + "\n\n-----------------------\n");
+
+        })
+};
 
 function movieThis() {
-    // if no search command is entered, print Mr Nobody movie details
+    // if no search command is entered, print Ad Astra movie details
     if (!searchResult) {
-        searchResult = "Mr Nobody";
+        searchResult = "Ad Astra";
+        console.log("\nUh oh, your search field was blank. If you would like to search for a specific movie, please insert it after 'movie-this'.\nIn the meantime, here is a movie I recommend:")
     };
     // get OMDb API
     axios.get("http://www.omdbapi.com/?t=" + searchResult + "&y=&plot=short&apikey=trilogy").then(
         function (response) {
-            console.log("-----------------------\n\nMovie Title: " + response.data.Title +
+            console.log("\n-----------------------\n\nMovie Title: " + response.data.Title +
                 "\nRelease Year: " + response.data.Year +
                 "\nMovie Rated: " + response.data.Rated +
                 "\nIMDb Rating: " + response.data.imdbRating +
@@ -120,8 +107,8 @@ function movieThis() {
                 "\nProduced in: " + response.data.Country +
                 "\nLanguage: " + response.data.Language +
                 "\nPlot: " + response.data.Plot +
-                "\nActors: " + response.data.Actors + "\n\n-----------------------")
-    });
+                "\nActors: " + response.data.Actors + "\n\n-----------------------\n")
+        });
 };
 
 function doThis() {
@@ -130,14 +117,18 @@ function doThis() {
         if (error) {
             return console.log(error);
         }
-        // use .split to separate objects within our file 
-        var dataArr = data.split(",");
 
-        // taking objects from random.txt and passing as parameters 
-        userInput = dataArr[0];
-        searchResult = dataArr[1];
+        // use .split to separate strings within our file 
+        var dataArr = data.split("|");
 
-        // calling main function for new parameters
-        liriCommand(userInput, searchResult);
+        for (var i = 0; i < dataArr.length; i++) {
+            // taking objects from random.txt and passing as parameters 
+            var dataArrT = dataArr[i].split(",");
+            userInput = dataArrT[0];
+            searchResult = dataArrT[1];
+
+            // calling main function to display new parameters
+            liriCommand(userInput, searchResult);
+        }
     });
-};
+}
