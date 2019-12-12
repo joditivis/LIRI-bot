@@ -52,14 +52,19 @@ function liriCommand(userInput, searchResult) {
 
         case "do-what-it-says":
             doThis();
-    }
+            break;
+
+        // if input is left blank, return this message to user
+        default:
+            console.log("Please enter one of the following commands: 'concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says' followed by what you would like to search for.")
+    };
 }
 // calling liriCommand function
 liriCommand(userInput, searchResult);
 
 
 function spotifyThisSong() {
-    // if search result isn't found, display value for The Sign
+    // if no search command is entered, print The Sign song details
     if (!searchResult) {
         searchResult = "The Sign by Ace of Base"
     };
@@ -70,7 +75,7 @@ function spotifyThisSong() {
             return console.log('Error occurred: ' + error);
         }
 
-        // collecting data within array
+        // collecting data within its array
         var spotifyArr = data.tracks.items;
 
         for (i = 0; i < spotifyArr.length; i++) {
@@ -83,6 +88,7 @@ function spotifyThisSong() {
 };
 
 function concertThis() {
+    // if no search command is entered, print Taylor Swift concerts
     if (!searchResult) {
         searchResult = "Taylor Swift";
     }
@@ -99,6 +105,7 @@ function concertThis() {
 }
 
 function movieThis() {
+    // if no search command is entered, print Mr Nobody movie details
     if (!searchResult) {
         searchResult = "Mr Nobody";
     };
