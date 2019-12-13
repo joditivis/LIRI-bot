@@ -1,6 +1,6 @@
 # LIRI-bot
 
-**Link to video tutorial:**
+**Link to video tutorial: https://drive.google.com/file/d/12s9xd9Zxx1_u6-vY0XevwukBueWPiOPx/view**
 
 ## About LIRI-bot: 
 LIRI is a command line node app that takes in search parameters for songs, 
