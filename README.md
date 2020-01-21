@@ -1,6 +1,6 @@
 # LIRI-bot
 
-**Link to video tutorial: https://drive.google.com/file/d/12s9xd9Zxx1_u6-vY0XevwukBueWPiOPx/view?usp=sharing**
+**Link to applications video tutorial: https://drive.google.com/file/d/12s9xd9Zxx1_u6-vY0XevwukBueWPiOPx/view?usp=sharing**
 
 ## About LIRI-bot: 
 LIRI is a command line node app that takes in search parameters for songs, 
@@ -20,13 +20,37 @@ For search results, LIRI bot makes calls to the Bands in Town API, Spotify API, 
 * Album: Toto IV
 * Spotify Link: https://open.spotify.com/track/2374M0fQpWi3dLnB54qaLX
 ```
+---
+## Node Installations:
+```
+npm init
+- this will install your package.json files
+```
+```
+npm install
+- this will install your node-modules and package-lock.json
+```
+```
+npm install dotenv
+```
+```
+npm install axios
+```
+```
+npm install moment
+```
 
+---
 
-- If you would like to clone this repo, you will have to include your own .env file with your personal Spotify ID and Secret.
-- The format of your .env file should be as follows:
+If you would like to clone this repo, you will have to include your own .env file with your personal Spotify ID and Secret.
+The format of your .env file should be as follows:
 ```
 # Spotify API keys
 
 SPOTIFY_ID=<your spotify id>
 SPOTIFY_SECRET=<your spotify secret>
 ```
+---
+
+## Example Feature and Functionality:
+![Image](lirigif.gif)
